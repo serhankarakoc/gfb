@@ -6,13 +6,21 @@
                     <h5 class="card-title mb-0" style="font-weight: 600; font-size: 1.2rem;">
                         <i class="fas fa-tags me-2"></i>{{.Title}}
                     </h5>
-                    <a href="/dashboard/user-types/create" class="btn btn-primary btn-sm">
-                        <i class="fas fa-plus me-2"></i>Yeni Kullanıcı Tipi
-                    </a>
+                    <div class="ms-auto d-flex gap-2">
+                        <button class="btn btn-warning btn-sm" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#filterCollapse" aria-expanded="false" aria-controls="filterCollapse">
+                            <i class="fas fa-filter me-1"></i> Filtrele
+                        </button>
+                        <a href="/dashboard/user-types/create" class="btn btn-primary btn-sm">
+                            <i class="fas fa-plus me-2"></i>Yeni Kullanıcı Tipi
+                        </a>
+                    </div>
                 </div>
             </div>
-            <div class="card-body" style="padding: 2rem;">
-                <div class="mb-4">
+
+            <!-- Açılır-Kapanır Filtre Bölümü -->
+            <div class="collapse" id="filterCollapse">
+                <div class="card-body border-bottom pb-3 mb-0 bg-light">
                     <div class="border rounded bg-white shadow-sm p-4">
                         <form method="GET" action="/dashboard/user-types">
                             <div class="row mb-4">
@@ -86,8 +94,8 @@
                                 <!-- Sıfırla Butonu (3 kolon) -->
                                 <div class="col-xl-3 col-lg-6 col-md-6">
                                     <label class="form-label small text-muted mb-1 d-block">&nbsp;</label>
-                                    <a href="/dashboard/user-types" class="btn btn-outline-danger w-100 py-2">
-                                        <i class="fas fa-times-circle me-2"></i> Sıfırla
+                                    <a href="/dashboard/user-types" class="btn btn-secondary w-100 py-2">
+                                        <i class="fas fa-times me-2"></i> Temizle
                                     </a>
                                 </div>
                             </div>
@@ -97,7 +105,9 @@
                         </form>
                     </div>
                 </div>
+            </div>
 
+            <div class="card-body" style="padding: 2rem;">
                 <!-- Tablo -->
                 <div class="table-responsive">
                     <table class="table table-hover">
