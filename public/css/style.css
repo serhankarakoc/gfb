@@ -9,6 +9,15 @@
     --sidebar-width: 80px;
     --sidebar-expanded-width: 250px;
     --header-height: 70px;
+    
+    /* Form elementleri için standart değişkenler */
+    --input-height: 48px;
+    --input-border-radius: 8px;
+    --input-border-color: #e5e7eb;
+    --input-focus-border-color: var(--primary-color);
+    --input-padding: 12px 16px;
+    --input-bg-color: #f8fafc;
+    --input-focus-bg-color: white;
 }
 
 /* ===================== AUTH PAGE STYLES ===================== */
@@ -105,35 +114,131 @@ body.auth-page {
     display: block;
 }
 
-.form-control {
-    border: 2px solid #e5e7eb;
-    border-radius: 8px;
-    padding: 12px 16px;
+/* ===================== STANDART FORM ELEMENT STYLES ===================== */
+
+/* Tüm input, select ve textarea elementleri için ortak stil */
+.form-control,
+.form-select,
+textarea.form-control,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"],
+input[type="search"],
+select {
+    height: var(--input-height);
+    border: 2px solid var(--input-border-color);
+    border-radius: var(--input-border-radius);
+    padding: var(--input-padding);
     font-size: 1rem;
     transition: all 0.3s ease;
-    background-color: #f8fafc;
+    background-color: var(--input-bg-color);
+    font-family: inherit;
+    width: 100%;
+    box-sizing: border-box;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
-.form-control:focus {
-    border-color: var(--primary-color);
+/* Select özel ok simgesi */
+.form-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23374151' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px 12px;
+    padding-right: 40px;
+}
+
+/* Textarea için farklı yükseklik */
+textarea.form-control {
+    height: auto;
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Focus durumu - Tüm form elementleri için */
+.form-control:focus,
+.form-select:focus,
+textarea.form-control:focus,
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="tel"]:focus,
+input[type="date"]:focus,
+input[type="time"]:focus,
+input[type="datetime-local"]:focus,
+input[type="search"]:focus,
+select:focus {
+    border-color: var(--input-focus-border-color);
     box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-    background-color: white;
+    background-color: var(--input-focus-bg-color);
+    outline: none;
 }
 
-.input-group .form-control {
-    border-radius: 0 8px 8px 0;
-    border-left: none;
+/* Disabled durumu */
+.form-control:disabled,
+.form-select:disabled,
+textarea.form-control:disabled,
+input:disabled,
+select:disabled {
+    background-color: #f1f5f9;
+    border-color: #e5e7eb;
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
+/* Readonly durumu */
+.form-control[readonly],
+.form-select[readonly],
+input[readonly],
+select[readonly] {
+    background-color: #f9fafb;
+    border-color: #d1d5db;
+}
+
+/* Input group için stiller */
 .input-group {
     display: flex;
+    width: 100%;
+}
+
+.input-group .form-control,
+.input-group .form-select {
+    flex: 1;
+    position: relative;
+}
+
+.input-group .form-control:first-child,
+.input-group .form-select:first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.input-group .form-control:last-child,
+.input-group .form-select:last-child {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.input-group .form-control:not(:first-child):not(:last-child),
+.input-group .form-select:not(:first-child):not(:last-child) {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
 }
 
 .input-icon {
+    height: var(--input-height);
     background-color: #f1f5f9;
-    border: 2px solid #e5e7eb;
+    border: 2px solid var(--input-border-color);
     border-right: none;
-    border-radius: 8px 0 0 8px;
+    border-radius: var(--input-border-radius) 0 0 var(--input-border-radius);
     padding: 12px 16px;
     color: #64748b;
     display: flex;
@@ -143,12 +248,46 @@ body.auth-page {
     transition: all 0.3s ease;
 }
 
-.form-control:focus ~ .input-icon {
-    border-color: var(--primary-color);
+.form-control:focus ~ .input-icon,
+.form-select:focus ~ .input-icon {
+    border-color: var(--input-focus-border-color);
     background-color: #eef2ff;
     color: var(--primary-color);
 }
 
+.input-icon + .form-control,
+.input-icon + .form-select {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: none;
+}
+
+/* Number input için ok butonlarını gizle (isteğe bağlı) */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    opacity: 1;
+    height: var(--input-height);
+}
+
+/* Checkbox ve Radio butonları için */
+.form-check-input {
+    width: 1.2em;
+    height: 1.2em;
+    margin-top: 0.15em;
+    margin-right: 0.5em;
+    border: 2px solid var(--input-border-color);
+}
+
+.form-check-input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.form-check-input:focus {
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* Buton stilleri */
 .btn-auth {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     border: none;
@@ -160,6 +299,10 @@ body.auth-page {
     width: 100%;
     transition: all 0.3s ease;
     cursor: pointer;
+    height: var(--input-height);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-auth:hover {
@@ -177,8 +320,8 @@ body.auth-page {
     padding-top: 20px;
     border-top: 1px solid #e5e7eb;
     display: flex;
-    flex-direction: column; /* İçerikleri dikey hizala */
-    gap: 5px; /* Linkler arası boşluk */
+    flex-direction: column;
+    gap: 5px;
 }
 
 .forgot-password {
@@ -222,8 +365,6 @@ body.auth-page {
     border-top: 1px solid #e5e7eb;
 }
 
-/* YENİ EKLENEN AUTH STİLLERİ (Google Butonu, Ayırıcı, Yardımcı Metin) */
-
 /* Sosyal Medya Butonları */
 .btn-google {
     background-color: white;
@@ -239,7 +380,8 @@ body.auth-page {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 15px; /* Ana butondan sonra boşluk */
+    margin-top: 15px;
+    height: var(--input-height);
 }
 
 .btn-google:hover {
@@ -253,7 +395,6 @@ body.auth-page {
     font-size: 1.1rem;
 }
 
-/* VEYA Ayırıcı Stili */
 .auth-separator {
     display: flex;
     align-items: center;
@@ -307,6 +448,8 @@ body.auth-page {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
     border-right: 1px solid #e5e7eb;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 #sidebar.expanded {
@@ -317,10 +460,12 @@ body.auth-page {
     padding: 0; 
     border-bottom: 1px solid #f1f5f9;
     height: var(--header-height);
+    min-height: var(--header-height);
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
+    flex-shrink: 0;
 }
 
 #sidebar .logo {
@@ -366,6 +511,10 @@ body.auth-page {
     padding: 15px 0;
     margin: 0;
     list-style: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-grow: 1;
+    max-height: calc(100vh - var(--header-height));
 }
 
 #sidebar ul li a {
@@ -434,6 +583,25 @@ body.auth-page {
 #sidebar.expanded .nav-link-text {
     opacity: 1;
     display: block;
+}
+
+/* Scrollbar stilleri */
+#sidebar ul.components::-webkit-scrollbar {
+    width: 4px;
+}
+
+#sidebar ul.components::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+#sidebar ul.components::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+#sidebar ul.components::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
 }
 
 #content {
@@ -579,10 +747,30 @@ body.auth-page {
     color: var(--dark-color);
 }
 
+/* ===================== DASHBOARD CARDS STYLES ===================== */
 .dashboard-card {
     border: none;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Kart border stilleri */
+.border-left-primary {
+    border-left: 4px solid #4e73df !important;
+}
+
+.border-left-success {
+    border-left: 4px solid #1cc88a !important;
+}
+
+.border-left-info {
+    border-left: 4px solid #36b9cc !important;
 }
 
 .card-icon {
@@ -594,28 +782,45 @@ body.auth-page {
     justify-content: center;
     font-size: 1.5rem;
     color: white;
+    flex-shrink: 0;
 }
 
-.card-icon.primary { background-color: var(--primary-color); }
-.card-icon.success { background-color: var(--success-color); }
-.card-icon.warning { background-color: var(--warning-color); }
-.card-icon.info { background-color: var(--info-color); }
+.card-icon.primary { background-color: #4e73df; }
+.card-icon.success { background-color: #1cc88a; }
+.card-icon.info { background-color: #36b9cc; }
+
+/* Font stilleri */
+.font-weight-bold {
+    font-weight: 600 !important;
+}
+
+.text-muted {
+    color: #6c757d !important;
+}
+
+.card-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.card-title i {
+    font-size: 0.85rem;
+}
+
+.card-body h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--dark-color);
+    margin-bottom: 0.25rem;
+}
+
+.card-body small {
+    font-size: 0.85rem;
+}
 
 .chart-container {
     height: 300px;
-}
-
-.user-avatar-sm {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background: #eef2ff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--primary-color);
-    font-size: 0.8rem;
-    font-weight: 600;
 }
 
 .user-avatar-sm {
@@ -705,6 +910,27 @@ body.auth-page {
     .auth-page-footer {
         padding: 15px 20px;
     }
+    
+    /* Mobil için kart stilleri */
+    .mb-sm-3 {
+        margin-bottom: 1rem !important;
+    }
+    
+    .card-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+    }
+    
+    .card-body h2 {
+        font-size: 1.75rem;
+    }
+    
+    /* Mobil için form elementleri */
+    :root {
+        --input-height: 44px;
+        --input-padding: 10px 14px;
+    }
 }
 
 /* ===================== FORM STYLES ===================== */
@@ -776,4 +1002,98 @@ body.auth-page {
 .search-box .form-control {
     border-radius: 8px;
     border: 1px solid #e5e7eb;
+}
+
+/* ===================== UTILITY CLASSES ===================== */
+.mb-4 {
+    margin-bottom: 1.5rem !important;
+}
+
+.mt-4 {
+    margin-top: 1.5rem !important;
+}
+
+.p-4 {
+    padding: 1.5rem !important;
+}
+
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.col-xl-4, .col-md-6 {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.d-flex {
+    display: flex !important;
+}
+
+.justify-content-between {
+    justify-content: space-between !important;
+}
+
+.align-items-center {
+    align-items: center !important;
+}
+
+.me-1 {
+    margin-right: 0.25rem !important;
+}
+
+.me-2 {
+    margin-right: 0.5rem !important;
+}
+
+.mb-0 {
+    margin-bottom: 0 !important;
+}
+
+.mb-1 {
+    margin-bottom: 0.25rem !important;
+}
+
+/* ===================== GENERAL BUTTON STYLES ===================== */
+.btn {
+    padding: 8px 16px;
+    border-radius: var(--input-border-radius);
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #4f46e5;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+}
+
+.btn-outline-primary {
+    background-color: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-sm {
+    padding: 4px 12px;
+    font-size: 0.75rem;
+}
+
+.btn-lg {
+    padding: 12px 24px;
+    font-size: 1rem;
 }
